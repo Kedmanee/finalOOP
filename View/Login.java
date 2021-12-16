@@ -43,7 +43,7 @@ public class Login{
 
         loginp = new JPanel();
         loginp.setLayout(new FlowLayout());
-        login = new JButton("Log-In");
+        login = new JButton("LOGIN");
         loginp.add(login);
         login.setFont(f1);
 
@@ -52,7 +52,7 @@ public class Login{
         login.setForeground(Color.WHITE);
 
         nop = new JPanel();
-        log = new JLabel("Log-In");
+        log = new JLabel("LOGIN");
         nop.add(log);
         log.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
 

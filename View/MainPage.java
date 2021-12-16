@@ -30,7 +30,7 @@ public class MainPage extends JInternalFrame {
         String b = currentB.toAbsolutePath().toString();
         ImageIcon cicon = new ImageIcon(b);
         Image img = cicon.getImage();
-        Image newimg = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        Image newimg = img.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH);
         cicon = new ImageIcon(newimg);
 
         icon = new JLabel(cicon);
@@ -43,7 +43,9 @@ public class MainPage extends JInternalFrame {
         bntp = new JPanel();
         mainbnt = new JPanel();
         reg = new JButton("Register");
+        reg.setFont(new Font("Arial Rounded MT Bold", 0, 72));
         manage = new JButton("Manage");
+        manage.setFont(new Font("Arial Rounded MT Bold", 0, 72));
         mainbnt.add(bntp, BorderLayout.CENTER);
         bntp.setLayout(new FlowLayout());
         bntp.add(reg);
@@ -52,17 +54,17 @@ public class MainPage extends JInternalFrame {
 
         bntp.setBackground(new Color(69,68,68));
         mainbnt.setBackground(new Color(69,68,68));
-        reg.setFont(f1); manage.setFont(f1);
         reg.setBackground(new Color(250,0,100)); reg.setForeground(Color.white);
         manage.setBackground(new Color(250,0,100)); manage.setForeground(Color.WHITE);
 
         bnthire = new JPanel();
         rent = new JButton("Rent");
+        rent.setFont(new Font("Arial Rounded MT Bold", 0, 72));
         bnthire.setLayout(new FlowLayout());
         bnthire.add(rent);
 
         bnthire.setBackground(new Color(69,68,68));
-        rent.setBackground(new Color(250,0,100)); rent.setForeground(Color.WHITE); rent.setFont(f1);
+        rent.setBackground(new Color(250,0,100)); rent.setForeground(Color.WHITE);
 
         this.add(photop);
         this.add(mainbnt);

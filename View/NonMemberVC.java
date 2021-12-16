@@ -175,8 +175,12 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
            }
         }
         if(ae.getSource().equals(back)){
-            this.frame.getPricePreview().setVisible(true);
             this.frame.getNonMemberVC().setVisible(false);
+            this.frame.getNonMemberVC().hide();
+            this.frame.getDesktopPane().remove(this.frame.getNonMemberVC());
+            this.frame.getDesktopPane().add(this.frame.getPricePreview());
+            this.frame.getPricePreview().setVisible(true);
+            this.frame.getPricePreview().show();
         }
     }
 

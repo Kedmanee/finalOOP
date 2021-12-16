@@ -62,10 +62,7 @@ public class RentView extends JInternalFrame {
         heading.setForeground(Color.WHITE);
         back.setBackground(new Color(250,0,100));
         /*
-
-
-
-        */
+         */
 
         //ตารางแสดงข้อมูลหนังสือ
         model = new DefaultTableModel();

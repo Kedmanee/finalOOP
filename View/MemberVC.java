@@ -99,8 +99,12 @@ public class MemberVC extends JInternalFrame implements ActionListener{
             }
         }
         if(ae.getSource().equals(back)){
-            this.frame.getPricePreview().setVisible(true);
             this.frame.getMemberVC().setVisible(false);
+            this.frame.getMemberVC().hide();
+            this.frame.getDesktopPane().remove(this.frame.getMemberVC());
+            this.frame.getDesktopPane().add(this.frame.getPricePreview());
+            this.frame.getPricePreview().setVisible(true);
+            this.frame.getPricePreview().show();
         }
     }
 }

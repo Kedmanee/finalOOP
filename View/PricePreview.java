@@ -28,9 +28,9 @@ public class PricePreview extends JInternalFrame implements ActionListener{
         p_buttons.setLayout(new FlowLayout());
         p_choice.setLayout(new FlowLayout());
         
-        price_header = new JLabel("The Price of [[Book's Title]]: (Book's Price)");
+        price_header = new JLabel("Are you a member??");
         price_header.setHorizontalAlignment(JLabel.CENTER);
-        choice = new JLabel("Select The Pay Choice");
+        choice = new JLabel("Select The choice");
         choice.setHorizontalAlignment(JLabel.CENTER);
         p_choice.add(choice);
         p_price.add(price_header);
@@ -71,12 +71,20 @@ public class PricePreview extends JInternalFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource().equals(mem)){
             this.frame.getPricePreview().setVisible(false);
+            this.frame.getPricePreview().hide();
+            this.frame.getDesktopPane().remove(this.frame.getPricePreview());
+            this.frame.getDesktopPane().add(this.frame.getMemberVC());
             this.frame.getMemberVC().setVisible(true);
+            this.frame.getMemberVC().show();
         }
         
         if(ae.getSource().equals(non_mem)){
             this.frame.getPricePreview().setVisible(false);
+            this.frame.getPricePreview().hide();
+            this.frame.getDesktopPane().remove(this.frame.getPricePreview());
+            this.frame.getDesktopPane().add(this.frame.getNonMemberVC());
             this.frame.getNonMemberVC().setVisible(true);
+            this.frame.getNonMemberVC().show();
         }
     }
 }

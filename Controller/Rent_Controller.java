@@ -68,7 +68,7 @@ public class Rent_Controller implements ActionListener {
             //เริ่มลูป
 
             //จบลูป
-            if (!Objects.equals(book.getTitle(), "")) {
+            if (!Objects.equals(book.getTitle(), "")& book.isStatus()==true) {
                 Object[] row = {main.getRentView().getBookCodeTF().getText(), book.getTitle(), main.getRentView().getTextDayrentTF().getText()}; //รับข้อมูลมาใส่ในobject
                 main.getRentView().getModel().addRow(row); //นำrowที่รับข้อมูลต่างๆไปใส่ในตาราง
                 main.getRentView().getTableOfRentals().getColumn("").setCellRenderer(btn);
@@ -83,8 +83,12 @@ public class Rent_Controller implements ActionListener {
         else if (ae.getSource().equals(main.getRentView().getBtn_submit())) {
             Book booklist = new Book();//รับลิสต์หนังสือมาจากdb
             Book book = new Book();//เอาไว้สำหรับรับหนังสือจะยืม
-
-
+            this.main.getRentView().setVisible(false);
+            this.main.getRentView().hide();
+            this.main.getDesktopPane().remove(this.main.getRentView());
+            this.main.getDesktopPane().add(this.main.getPricePreview());
+            this.main.getPricePreview().setVisible(true);
+            this.main.getPricePreview().show();
 
             for (int j = 0; j < idcheck.size(); j++) {
                 for (int i = 0; i < booklist.getBookList().size(); i++) {
@@ -189,5 +193,3 @@ public class Rent_Controller implements ActionListener {
         }
     }
 }
-
-
