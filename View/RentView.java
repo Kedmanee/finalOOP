@@ -1,6 +1,8 @@
 package View;
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -11,8 +13,8 @@ public class RentView extends JInternalFrame {
     private DefaultTableModel model;
     private JTable tableOfRentals;
     private JScrollPane scroll;
-    private JButton btn_submit, btn_add, btn_delete, button, button2;
-    private JPanel pHeading, pAddBook, pn_addbook, pButtonCTRL, pHeadTop, pTable_dltbtn, pDelete;
+    private JButton btn_submit, btn_add, btn_delete, button, button2, back;
+    private JPanel pHeading, pAddBook, pn_addbook, pButtonCTRL, pHeadTop, pBack, pTable_dltbtn, pDelete,pHeadingAndBack;
     private JLabel heading, bookCode, textDayrent;
     private JTextField bookCodeTF, textDayrentTF;
 
@@ -43,6 +45,27 @@ public class RentView extends JInternalFrame {
         pHeading.add(heading);
         pHeading.setBackground(new Color(69, 68, 68));
         heading.setForeground(Color.WHITE);
+        pBack = new JPanel((new FlowLayout(FlowLayout.LEFT, 10, 10)));
+        Path currentB = Paths.get("src/main/java/img/go-back-arrow.png");
+        String b = currentB.toAbsolutePath().toString();
+        ImageIcon backIcon = new ImageIcon(b);
+        Image img = backIcon.getImage();
+        Image newimg = img.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
+        backIcon = new ImageIcon(newimg);
+        back = new JButton(backIcon);
+        pHeadingAndBack = new JPanel(new BorderLayout());
+        pBack.add(back);
+        pHeadingAndBack.add(pBack, BorderLayout.WEST);
+        pHeadingAndBack.add(pHeading);
+        pHeading.setBackground(new Color(69,68,68));
+        pBack.setBackground(new Color(69,68,68));
+        heading.setForeground(Color.WHITE);
+        back.setBackground(new Color(250,0,100));
+        /*
+
+
+
+        */
 
         //ตารางแสดงข้อมูลหนังสือ
         model = new DefaultTableModel();
@@ -131,19 +154,27 @@ public class RentView extends JInternalFrame {
         pButtonCTRL.add(pAddBook);
 
         //หัวข้อกับค้นหารวมกัน
-        pHeadTop = new JPanel(new GridLayout(1, 1));
-        pHeadTop.add(pHeading);
+//        pHeadTop = new JPanel();
+//        pHeadTop.add(pHeading);
 
         //ลบ Title bar
         ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
 
         frame.setTitle("Book Rentals");
         this.setLayout(new BorderLayout());
-        this.getContentPane().add(pHeadTop, BorderLayout.NORTH);
+        this.getContentPane().add(pHeadingAndBack, BorderLayout.NORTH);
         this.getContentPane().add(pTable_dltbtn);
         this.getContentPane().add(pButtonCTRL, BorderLayout.SOUTH);
         this.pack();
         this.setVisible(false);//แก้
+    }
+
+    public JButton getBack() {
+        return back;
+    }
+
+    public void setBack(JButton back) {
+        this.back = back;
     }
 
     public DefaultTableModel getModel() {
