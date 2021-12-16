@@ -42,7 +42,7 @@ public class ManageBooks extends JInternalFrame implements InternalFrameListener
 
         //หัวข้อการจัดการหนังสือ
         heading = new JLabel("Book Management");
-        heading.setFont(new Font("Arial Rounded MT Bold", 0, 50));
+        heading.setFont(new Font("Arial Rounded MT Bold", 0, 52));
         pHeading = new JPanel();
         pHeading.add(heading);
 
@@ -388,6 +388,30 @@ public class ManageBooks extends JInternalFrame implements InternalFrameListener
 
     public void setFrame(MDI frame) {
         this.frame = frame;
+    }
+
+    public JButton getBack() {
+        return back;
+    }
+
+    public void setBack(JButton back) {
+        this.back = back;
+    }
+
+    public JPanel getpBack() {
+        return pBack;
+    }
+
+    public void setpBack(JPanel pBack) {
+        this.pBack = pBack;
+    }
+
+    public JPanel getpHeadingAndBack() {
+        return pHeadingAndBack;
+    }
+
+    public void setpHeadingAndBack(JPanel pHeadingAndBack) {
+        this.pHeadingAndBack = pHeadingAndBack;
     }
 
     private static class HeaderRenderer implements TableCellRenderer {
