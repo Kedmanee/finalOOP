@@ -48,6 +48,7 @@ public class ManageBookController implements ActionListener {
         manageBooks.getAddBooks().addActionListener(this);
         main.getManageBooks().getSearch().addActionListener(this);
         main.getManageBooks().getReturnBook().addActionListener(this);
+        main.getManageBooks().getBack().addActionListener(this);
         button.addActionListener(this);
         addingBook.getAdd().addActionListener(this);
 
@@ -86,44 +87,59 @@ public class ManageBookController implements ActionListener {
             addingBook.getFrame().setVisible(true);
             updateTable();
         } else if (ae.getSource().equals(addingBook.getAdd())) {
+            if (addingBook.getNameTF().getText().equals("") || addingBook.getAuthorTF().getText().equals("") || addingBook.getPricePerDayTF().getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please enter information of book.", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else {
 
-
-            test = book.getBookList().size();
-            Book dummy = new Book(checkID(0), addingBook.getNameTF().getText(), (String) addingBook.getCategoryCB().getSelectedItem(), true, addingBook.getAuthorTF().getText(), Double.parseDouble(addingBook.getPricePerDayTF().getText()), 0);
-            dummy.insertBook();
-            addingBook.getNameTF().setText("");
-            addingBook.getAuthorTF().setText("");
-            addingBook.getPricePerDayTF().setText("");
-            addingBook.getCategoryCB().setSelectedItem("เบ็ดเตล็ด");
-            main.getManageBooks().getModel().setRowCount(0);
-            updateTable();
+                test = book.getBookList().size();
+                Book dummy = new Book(checkID(0), addingBook.getNameTF().getText(), (String) addingBook.getCategoryCB().getSelectedItem(), true, addingBook.getAuthorTF().getText(), Double.parseDouble(addingBook.getPricePerDayTF().getText()), 0);
+                dummy.insertBook();
+                addingBook.getNameTF().setText("");
+                addingBook.getAuthorTF().setText("");
+                addingBook.getPricePerDayTF().setText("");
+                addingBook.getCategoryCB().setSelectedItem("เบ็ดเตล็ด");
+                main.getManageBooks().getModel().setRowCount(0);
+                updateTable();
+            }
 
         } else if (ae.getSource().equals(main.getManageBooks().getSearch())) {
             try {
                 main.getManageBooks().getModel().setRowCount(0);
                 if (main.getManageBooks().getSearchCB().getSelectedIndex() == 0) {
-                    for (Book infoBook : getBooks()) {
-                        if (Integer.parseInt(main.getManageBooks().getSearchTF().getText()) == infoBook.getBookID()) {
-                            Object[] row = {infoBook.getBookID(), infoBook.getCategories(), infoBook.getTitle()};
-                            main.getManageBooks().getModel().addRow(row);
-                            main.getManageBooks().getTableOfInfoBooks().getColumn("").setCellRenderer(btn);
-                            main.getManageBooks().getTableOfInfoBooks().getColumn("").setCellEditor(new ButtonEditor(new JCheckBox()));
+                    if (main.getManageBooks().getSearchTF().getText().equals("")) {
+                        updateTable();
+                    } else {
+                        for (Book infoBook : getBooks()) {
+                            if (Integer.parseInt(main.getManageBooks().getSearchTF().getText()) == infoBook.getBookID()) {
+                                Object[] row = {infoBook.getBookID(), infoBook.getCategories(), infoBook.getTitle()};
+                                main.getManageBooks().getModel().addRow(row);
+                                main.getManageBooks().getTableOfInfoBooks().getColumn("").setCellRenderer(btn);
+                                main.getManageBooks().getTableOfInfoBooks().getColumn("").setCellEditor(new ButtonEditor(new JCheckBox()));
 
+                            }
                         }
                     }
                 } else {
                     for (Book infoBook : getBooks()) {
-                        if (main.getManageBooks().getSearchTF().getText().equals(infoBook.getTitle())) {
-                            Object[] row = {infoBook.getBookID(), infoBook.getCategories(), infoBook.getTitle()};
-                            main.getManageBooks().getModel().addRow(row);
-                            main.getManageBooks().getTableOfInfoBooks().getColumn("").setCellRenderer(btn);
-                            main.getManageBooks().getTableOfInfoBooks().getColumn("").setCellEditor(new ButtonEditor(new JCheckBox()));
+                        if (main.getManageBooks().getSearchTF().getText().equals("")) {
+                            updateTable();
+                        } else {
+                            if (main.getManageBooks().getSearchTF().getText().equals(infoBook.getTitle())) {
+                                Object[] row = {infoBook.getBookID(), infoBook.getCategories(), infoBook.getTitle()};
+                                main.getManageBooks().getModel().addRow(row);
+                                main.getManageBooks().getTableOfInfoBooks().getColumn("").setCellRenderer(btn);
+                                main.getManageBooks().getTableOfInfoBooks().getColumn("").setCellEditor(new ButtonEditor(new JCheckBox()));
 
+                            }
                         }
                     }
                 }
+
+
             } catch (NumberFormatException e) {
-                System.out.println("123");
+                JOptionPane.showMessageDialog(null, "Please enter a valid book ID.", "Warning", JOptionPane.WARNING_MESSAGE);
+
+
             }
 
         } else if (ae.getSource().equals(main.getManageBooks().getReturnBook())) {
@@ -134,13 +150,12 @@ public class ManageBookController implements ActionListener {
 
         } else if (ae.getSource().equals(button)) {
             int row;
-            if(main.getManageBooks().getTableOfInfoBooks().getSelectedRow() == -1){
-                 row = keepRow;
-            }else {
+            if (main.getManageBooks().getTableOfInfoBooks().getSelectedRow() == -1) {
+                row = keepRow;
+            } else {
                 row = main.getManageBooks().getTableOfInfoBooks().getSelectedRow();
                 keepRow = row;
             }
-
 
 
             System.out.println(main.getManageBooks().getTableOfInfoBooks().getModel().getValueAt(row, 0));
@@ -174,6 +189,14 @@ public class ManageBookController implements ActionListener {
             main.getManageBooks().getModel().setRowCount(0);
             updateTable();
 
+
+        } else if (ae.getSource().equals(main.getManageBooks().getBack())) {
+            this.main.getManageBooks().setVisible(false);
+            this.main.getManageBooks().hide();
+            this.main.getDesktopPane().remove(this.main.getManageBooks());
+            this.main.getDesktopPane().add(this.main.getMainPage());
+            this.main.getMainPage().setVisible(true);
+            this.main.getMainPage().show();
 
         }
 
@@ -222,18 +245,16 @@ public class ManageBookController implements ActionListener {
 
         while (true) {
             boolean check = true;
-            for (Book book : getBooks()){
-                if (book.getBookID() == i){
+            for (Book book : getBooks()) {
+                if (book.getBookID() == i) {
                     check = false;
                 }
             }
-            if (check){
+            if (check) {
                 return i;
-            }
-            else  if(i>getBooks().size()){
+            } else if (i > getBooks().size()) {
                 return i;
-            }
-            else {
+            } else {
                 i++;
             }
         }
