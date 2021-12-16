@@ -42,6 +42,7 @@ public class Rent_Controller implements ActionListener {
         main.getRentView().getBtn_add().addActionListener(this);
         main.getRentView().getBtn_submit().addActionListener(this);
         main.getRentView().getBtn_delete().addActionListener(this);
+        main.getRentView().getBack().addActionListener(this);
     }
 
     @Override
@@ -141,6 +142,17 @@ public class Rent_Controller implements ActionListener {
                     }
                 }
             }
+        }
+
+
+        else if (ae.getSource().equals(main.getRentView().getBack())) {
+            this.main.getRentView().setVisible(false);
+            this.main.getRentView().hide();
+            this.main.getDesktopPane().remove(this.main.getRentView());
+            this.main.getDesktopPane().add(this.main.getMainPage());
+            this.main.getMainPage().setVisible(true);
+            this.main.getMainPage().show();
+
         }
 
     }
