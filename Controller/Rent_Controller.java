@@ -20,6 +20,7 @@ public class Rent_Controller implements ActionListener {
     private InfoBook infoBook;
     private List<Integer> idcheck = new LinkedList();
     private List<Integer> daycheck = new LinkedList();
+    public static List<Book> bookList;
     //ปุ่มในตาราง
     private ButtonRenderer btn;
     private JButton button;
@@ -76,8 +77,6 @@ public class Rent_Controller implements ActionListener {
                 idcheck.add(search); //เพิ่มไอดีในลิสต์
                 daycheck.add(days); //เพิ่มวันในลิสต์
             }
-            System.out.println("The id are " + idcheck); //เอาไว้เช็คลิสต์ที่เก็บไอดี
-            System.out.println("The day are " + daycheck); //เอาไว้เช็คลิสต์ที่เก็บวัน
         }
 
         else if (ae.getSource().equals(main.getRentView().getBtn_submit())) {
@@ -89,21 +88,22 @@ public class Rent_Controller implements ActionListener {
             this.main.getDesktopPane().add(this.main.getPricePreview());
             this.main.getPricePreview().setVisible(true);
             this.main.getPricePreview().show();
-
+            bookList = new LinkedList<>();
             for (int j = 0; j < idcheck.size(); j++) {
                 for (int i = 0; i < booklist.getBookList().size(); i++) {
                     int id = booklist.getBookList().get(i).getBookID();
-                    List<Book> bookList = new LinkedList<>();//เอาไว้เพิ่มลิสต์หนังสือที่จะยืมทั้งหมด
+                    //เอาไว้เพิ่มลิสต์หนังสือที่จะยืมทั้งหมด
                     if (idcheck.get(j) == id) {
                         book = booklist.getBookList().get(i);
                         book.setDay(daycheck.get(j));
                         book.setStatus(false);
                         bookList.add(book);//เพิ่มหนังสือนั้นเข้าไปในลิสต์
-                        book.rentBooks(bookList);
+
                         break;
                     }
                 }
             }
+            book.rentBooks(bookList);
         }
 
         else if (ae.getSource().equals(button)) {
@@ -132,9 +132,6 @@ public class Rent_Controller implements ActionListener {
             int index = (main.getRentView().getTableOfRentals().getSelectedRow());
             idcheck.remove(index);
             daycheck.remove(index);
-            /*for (int i : idcheck){
-                System.out.println(i);
-            }*/
             main.getRentView().getModel().setRowCount(0);
             for (int i = 0; i < idcheck.size(); i++) {
                 for (Book checkbook : bookDB.getBookList()) {

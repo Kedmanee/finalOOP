@@ -43,9 +43,9 @@ public class MainPage extends JInternalFrame {
         bntp = new JPanel();
         mainbnt = new JPanel();
         reg = new JButton("Register");
-        reg.setFont(new Font("Arial Rounded MT Bold", 0, 72));
+        reg.setFont(new Font("Arial Rounded MT Bold", 0, 52));
         manage = new JButton("Manage");
-        manage.setFont(new Font("Arial Rounded MT Bold", 0, 72));
+        manage.setFont(new Font("Arial Rounded MT Bold", 0, 52));
         mainbnt.add(bntp, BorderLayout.CENTER);
         bntp.setLayout(new FlowLayout());
         bntp.add(reg);
@@ -59,7 +59,7 @@ public class MainPage extends JInternalFrame {
 
         bnthire = new JPanel();
         rent = new JButton("Rent");
-        rent.setFont(new Font("Arial Rounded MT Bold", 0, 72));
+        rent.setFont(new Font("Arial Rounded MT Bold", 0, 52));
         bnthire.setLayout(new FlowLayout());
         bnthire.add(rent);
 

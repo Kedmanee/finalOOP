@@ -57,7 +57,7 @@ public class RegisterView extends JInternalFrame{
         header.setForeground(Color.WHITE);
 
         //id
-        id_header = new JLabel("Card ID: "); id = new JTextField(15);
+        id_header = new JLabel("Member ID: "); id = new JTextField(15);
         p_id.add(id_header); p_id.add(id);
         p_id.setBackground(new Color(69,68,68));
         id_header.setForeground(Color.WHITE);

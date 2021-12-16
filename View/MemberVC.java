@@ -33,14 +33,14 @@ public class MemberVC extends JInternalFrame implements ActionListener{
         p_id.setLayout(new FlowLayout());
         p_buttons.setLayout(new FlowLayout());
         
-        insert = new JLabel("Insert Your Card ID");
+        insert = new JLabel("Insert Member ID");
         insert.setHorizontalAlignment(JLabel.CENTER);
         insert.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
         p_insert.add(insert);
         p_insert.setBackground(new Color(69,68,68));
         insert.setForeground(Color.WHITE);
 
-        id_insert = new JLabel("Card ID: ");
+        id_insert = new JLabel("Member ID: ");
         id = new JPasswordField(20);
         p_id.add(id_insert); p_id.add(id);
         id_insert.setFont(f1);
@@ -79,7 +79,10 @@ public class MemberVC extends JInternalFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae){
         int index = 0;
         int check = 0;
-        double totalprice = book.getBookList().get(index).getPrice() * book.getBookList().get(index).getDay(); //ราคาเช่า (Day x Price)
+        double totalprice = 0.00; //ราคาเช่า (Day x Price)
+        for(int i = 0; i < Controller.Rent_Controller.bookList.size(); i++){
+            totalprice += Controller.Rent_Controller.bookList.get(i).getPrice() * Controller.Rent_Controller.bookList.get(i).getDay();
+        }
         if(ae.getSource().equals(accept)){
             while(index < member.getMemberList().size()){
                 if(member.getMemberList().get(index).getId().equals(id.getText())==false){
@@ -92,10 +95,16 @@ public class MemberVC extends JInternalFrame implements ActionListener{
                 }
             }
             if(check == 0){
-                JOptionPane.showMessageDialog(frame, "Invalid Card ID"); //ราคาตาม Collection หนังสือ
+                JOptionPane.showMessageDialog(frame, "Invalid Member ID"); //ราคาตาม Collection หนังสือ
             }
             else{
-                JOptionPane.showMessageDialog(frame, book.getBookList().get(index).getTitle()+ " Rented\nTotal Price: "+ totalprice);
+                JOptionPane.showMessageDialog(frame, Controller.Rent_Controller.bookList.size()+ " Book(s)\nTotal Price: "+ totalprice);
+                this.frame.getMemberVC().setVisible(false);
+                this.frame.getMemberVC().hide();
+                this.frame.getDesktopPane().remove(this.frame.getMemberVC());
+                this.frame.getDesktopPane().add(this.frame.getMainPage());
+                this.frame.getMainPage().setVisible(true);
+                this.frame.getMainPage().show();
             }
         }
         if(ae.getSource().equals(back)){

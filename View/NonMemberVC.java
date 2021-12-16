@@ -12,9 +12,9 @@ import model.Member;
 import model.NonMember;
 
 public class NonMemberVC extends JInternalFrame implements ActionListener{
-    private JPanel p_header, p_fname,p_lname, p_address, p_contract, p_buttons, p_cardid, p_id;
-    private JLabel header, fname_header, lname_header, address_header, contract_header, cardid_header, id_header;
-    private JTextField fname,lname, cardid, id, contract;
+    private JPanel p_header, p_fname,p_lname, p_address, p_contract, p_buttons, p_cardid;
+    private JLabel header, fname_header, lname_header, address_header, contract_header, cardid_header;
+    private JTextField fname,lname, cardid, contract;
     private JScrollPane sp_address;
     private JTextArea address;
     private JButton back, next;
@@ -29,7 +29,7 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
         this.init();
     }
     public void init(){
-        this.setLayout(new GridLayout(8,1));
+        this.setLayout(new GridLayout(7,1));
         
         p_header = new JPanel();
         p_fname = new JPanel();
@@ -38,14 +38,12 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
         p_contract = new JPanel();
         p_buttons = new JPanel();
         p_cardid = new JPanel();
-        p_id = new JPanel();
-        
+
         p_fname.setLayout(new FlowLayout());
         p_lname.setLayout(new FlowLayout());
         p_address.setLayout(new FlowLayout());
         p_contract.setLayout(new FlowLayout());
         p_buttons.setLayout(new FlowLayout());
-        p_id.setLayout(new FlowLayout());
         
         //header
         header = new JLabel("Insert Your Name/Address/Contract");
@@ -55,23 +53,6 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
         p_header.add(header);
         p_header.setBackground(new Color(69,68,68));
         header.setForeground(Color.WHITE);
-
-        //id
-        id_header = new JLabel("Card ID: "); id = new JTextField(15);
-        p_id.add(id_header); p_id.add(id);
-        p_id.setBackground(new Color(69,68,68));
-        id_header.setForeground(Color.WHITE);
-        id_header.setFont(f1); id.setFont(f1);
-
-        id.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char ch = e.getKeyChar();
-                if(!isNumber(ch)){
-                    e.consume();
-                }
-            }
-        });
 
         //ชื่อ/นามสกุล
         fname_header = new JLabel("First Name: "); fname = new JTextField(15); lname_header = new JLabel("Last Name: "); lname = new JTextField(15);
@@ -143,7 +124,6 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         
         this.add(p_header);
-        this.add(p_id);
         this.add(p_fname);
         this.add(p_lname);
         this.add(p_cardid);
@@ -158,9 +138,9 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae){
         int index = 0;
         double totalprice = 0.00; //ราคาเช่า (Day x Price)
-        //for(int i=0;i<RentController.bookList.size();i++){
-            //totalprice += RentController.bookList.get(i).getPrice() * RentController.bookList.get(i).getDay();
-        //}
+        for(int i = 0; i < Controller.Rent_Controller.bookList.size(); i++){
+            totalprice += Controller.Rent_Controller.bookList.get(i).getPrice() * Controller.Rent_Controller.bookList.get(i).getDay();
+        }
 
         if(ae.getSource().equals(next)){
            //เช็ค ข้อมูล ถ้าถูกต้อง Alert ขึ้น แล้วกลับหน้าเช่าหนังสือ
@@ -169,9 +149,16 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
            }
            
            else{
-                JOptionPane.showMessageDialog(frame, book.getBookList().get(index).getTitle()+ " Rented\nTotal Price: "+ totalprice);
+                JOptionPane.showMessageDialog(frame, Controller.Rent_Controller.bookList.size()+ " Books\nTotal Price: "+ totalprice);
                 NonMember nonmem = new NonMember(fname.getText(),lname.getText(),address.getText(),cardid.getText());
                 nonmem.addNonmemberDetail();
+                this.frame.getNonMemberVC().setVisible(false);
+                this.frame.getNonMemberVC().hide();
+                this.frame.getDesktopPane().remove(this.frame.getNonMemberVC());
+                this.frame.getDesktopPane().add(this.frame.getMainPage());
+                this.frame.getMainPage().setVisible(true);
+                this.frame.getMainPage().show();
+
            }
         }
         if(ae.getSource().equals(back)){

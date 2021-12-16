@@ -43,6 +43,12 @@ public class RegisterController implements ActionListener {
                 Member member = new Member(view.getId().getText(),view.getFname().getText(),view.getLname().getText(),view.getAddress().getText(),view.getCardid().getText(),view.getContract().getText());
                 member.registerMember();
                 JOptionPane.showMessageDialog(view.getFrame(), "Register Success.");
+                view.getId().setText("");
+                view.getFname().setText("");
+                view.getLname().setText("");
+                view.getAddress().setText("");
+                view.getCardid().setText("");
+                view.getContract().setText("");
             }
         }
         if(ae.getSource().equals(view.getBack())){

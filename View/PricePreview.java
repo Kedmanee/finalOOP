@@ -11,7 +11,7 @@ public class PricePreview extends JInternalFrame implements ActionListener{
     private JLabel choice;
     private JButton non_mem, mem;
     private MDI frame;
-    private Font f1 = new Font("Arial Rounded MT Bold", Font.BOLD, 15);
+    private Font f1 = new Font("Arial Rounded MT Bold", Font.BOLD, 52);
     
     public PricePreview(String title, boolean resizable, boolean closable, boolean maximizable, boolean iconificable, MDI frame){
         super(title, resizable, closable, maximizable, iconificable);
