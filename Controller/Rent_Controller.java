@@ -83,6 +83,8 @@ public class Rent_Controller implements ActionListener {
             Book booklist = new Book();//รับลิสต์หนังสือมาจากdb
             Book book = new Book();//เอาไว้สำหรับรับหนังสือจะยืม
 
+
+
             for (int j = 0; j < idcheck.size(); j++) {
                 for (int i = 0; i < booklist.getBookList().size(); i++) {
                     int id = booklist.getBookList().get(i).getBookID();

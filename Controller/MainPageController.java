@@ -38,7 +38,12 @@ public class MainPageController implements ActionListener {
             this.mdi.getManageBooks().show();
 
         } else if (e.getSource().equals(view.getRent())) {
-
+            this.mdi.getMainPage().setVisible(false);
+            this.mdi.getMainPage().hide();
+            this.mdi.getDesktopPane().remove(this.mdi.getMainPage());
+            this.mdi.getDesktopPane().add(this.mdi.getRentView());
+            this.mdi.getRentView().setVisible(true);
+            this.mdi.getRentView().show();
         }
     }
 }

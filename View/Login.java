@@ -59,6 +59,7 @@ public class Login{
         nop.setBackground(new Color(69,68,68));
         log.setForeground(Color.WHITE);
 
+        fr.setLocationRelativeTo(null);
         fr.add(nop);
         fr.add(userp);
         fr.add(passp);

@@ -5,9 +5,9 @@ package View;/*
  */
 
 /**
- *
  * @author lenovo
  */
+
 import Controller.MainPageController;
 import Controller.ManageBookController;
 import Controller.RegisterController;
@@ -29,6 +29,9 @@ public class MDI extends JFrame {
     private ManageBookController manageBookController;
     private RentView rentView;
     private Rent_Controller rent_controller;
+    private PricePreview pricePreview;
+    private MemberVC memberVC;
+    private NonMemberVC nonMemberVC;
 
     public RentView getRentView() {
         return rentView;
@@ -51,10 +54,13 @@ public class MDI extends JFrame {
         desktopPane.setLayout(new BorderLayout());
 
         //สร้างหน้าการจัดการหนังสือ
+        nonMemberVC = new NonMemberVC("Non-Member", false,false,false,false,this);
+        memberVC = new MemberVC("Member", false,false,false,false,this);
+        pricePreview = new PricePreview("Price Preview", false, false, false, false, this);
         rentView = new RentView(false, false, false, false, this);
         registerView = new RegisterView(false, false, false, false, this);
         mainPage = new MainPage(false, false, false, false, this);
-        mainPageController =  new MainPageController(mainPage, this);
+        mainPageController = new MainPageController(mainPage, this);
         registerController = new RegisterController(registerView, this);
         rent_controller = new Rent_Controller(rentView, this);
 
@@ -111,5 +117,30 @@ public class MDI extends JFrame {
     public void setRegisterView(RegisterView registerView) {
         this.registerView = registerView;
     }
+
+    public PricePreview getPricePreview() {
+        return pricePreview;
+    }
+
+    public MemberVC getMemberVC() {
+        return memberVC;
+    }
+
+    public void setMemberVC(MemberVC memberVC) {
+        this.memberVC = memberVC;
+    }
+
+    public NonMemberVC getNonMemberVC() {
+        return nonMemberVC;
+    }
+
+    public void setNonMemberVC(NonMemberVC nonMemberVC) {
+        this.nonMemberVC = nonMemberVC;
+    }
+
+    public void setPricePreview(PricePreview pricePreview) {
+        this.pricePreview = pricePreview;
+    }
 }
+
 
