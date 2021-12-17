@@ -10,26 +10,36 @@ import org.bson.Document;
 
 public class MongoDB {
 
-    private final MongoClient client;
-    private final String DB_URI = "mongodb+srv://testuser:abcd123456@cluster0.ozbpu.mongodb.net/";
+    private static MongoClient client;
+    private static final String DB_URI = "mongodb+srv://testuser:abcd123456@cluster0.ozbpu.mongodb.net/";
 
     public MongoDB(){
-        this.client = MongoClients.create(DB_URI);
+
     }
 
-    private MongoDatabase getDatabase(){
+    private static MongoDatabase getDatabase(){
+        if(MongoDB.client==null){
+            MongoDB.setClient(MongoClients.create(DB_URI));
+        }
+
         return client.getDatabase("chuenangsao");
     }
     public MongoCollection<Document> getBookCollection(){
-        return getDatabase().getCollection("book");
+        return MongoDB.getDatabase().getCollection("book");
     }
     public MongoCollection<Document> getMemberCollection(){
-        return getDatabase().getCollection("member");
+        return MongoDB.getDatabase().getCollection("member");
     }
     public MongoCollection<Document> getAdminCollection(){
-        return getDatabase().getCollection("admin");
+        return MongoDB.getDatabase().getCollection("admin");
     }
-    public MongoCollection<Document> getNonMemberCollection(){return getDatabase().getCollection("non-member");}
+    public MongoCollection<Document> getNonMemberCollection(){return MongoDB.getDatabase().getCollection("non-member");}
 
+    public static MongoClient getClient() {
+        return client;
+    }
 
+    public static void setClient(MongoClient client) {
+        MongoDB.client = client;
+    }
 }

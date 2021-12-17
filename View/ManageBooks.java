@@ -172,8 +172,6 @@ public class ManageBooks extends JInternalFrame implements InternalFrameListener
 
         //ลบ Title bar
         ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
-
-        frame.setTitle("Manage Books");
         this.setLayout(new BorderLayout());
         this.getContentPane().add(pHeadingAndSearch, BorderLayout.NORTH);
         this.getContentPane().add(scroll);

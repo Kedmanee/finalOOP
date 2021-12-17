@@ -142,6 +142,7 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
             totalprice += Controller.Rent_Controller.bookList.get(i).getPrice() * Controller.Rent_Controller.bookList.get(i).getDay();
         }
 
+
         if(ae.getSource().equals(next)){
            //เช็ค ข้อมูล ถ้าถูกต้อง Alert ขึ้น แล้วกลับหน้าเช่าหนังสือ
            if(fname.getText().equals("") || lname.getText().equals("") || address.getText().equals("") || contract.getText().equals("")){
@@ -149,7 +150,7 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
            }
            
            else{
-                JOptionPane.showMessageDialog(frame, Controller.Rent_Controller.bookList.size()+ " Books\nTotal Price: "+ totalprice);
+                JOptionPane.showMessageDialog(frame, Controller.Rent_Controller.bookList.size()+ " Book(s)\nTotal Price: "+ totalprice);
                 NonMember nonmem = new NonMember(fname.getText(),lname.getText(),address.getText(),cardid.getText());
                 nonmem.addNonmemberDetail();
                 this.frame.getNonMemberVC().setVisible(false);
@@ -158,9 +159,11 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
                 this.frame.getDesktopPane().add(this.frame.getMainPage());
                 this.frame.getMainPage().setVisible(true);
                 this.frame.getMainPage().show();
-
+               Controller.Rent_Controller.bookList.clear();
            }
+
         }
+
         if(ae.getSource().equals(back)){
             this.frame.getNonMemberVC().setVisible(false);
             this.frame.getNonMemberVC().hide();
@@ -169,6 +172,7 @@ public class NonMemberVC extends JInternalFrame implements ActionListener{
             this.frame.getPricePreview().setVisible(true);
             this.frame.getPricePreview().show();
         }
+
     }
 
     public boolean isNumber(char ch){

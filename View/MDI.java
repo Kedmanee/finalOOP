@@ -67,6 +67,7 @@ public class MDI extends JFrame {
         //manageBooks = new ManageBooks(false, false, false, false, this);
         manageBookController = new ManageBookController(this);
 
+        this.setTitle("ChueNangSao");
 
         //เพิ่มหน้าหนังสือ
         this.setLayout(new BorderLayout());

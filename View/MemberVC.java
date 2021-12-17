@@ -82,7 +82,9 @@ public class MemberVC extends JInternalFrame implements ActionListener{
         double totalprice = 0.00; //ราคาเช่า (Day x Price)
         for(int i = 0; i < Controller.Rent_Controller.bookList.size(); i++){
             totalprice += Controller.Rent_Controller.bookList.get(i).getPrice() * Controller.Rent_Controller.bookList.get(i).getDay();
+
         }
+
         if(ae.getSource().equals(accept)){
             while(index < member.getMemberList().size()){
                 if(member.getMemberList().get(index).getId().equals(id.getText())==false){
@@ -98,14 +100,16 @@ public class MemberVC extends JInternalFrame implements ActionListener{
                 JOptionPane.showMessageDialog(frame, "Invalid Member ID"); //ราคาตาม Collection หนังสือ
             }
             else{
-                JOptionPane.showMessageDialog(frame, Controller.Rent_Controller.bookList.size()+ " Book(s)\nTotal Price: "+ totalprice);
+                JOptionPane.showMessageDialog(frame, Controller.Rent_Controller.bookList.size()+ " Book(s)\nTotal Price: "+ totalprice * (0.95));
                 this.frame.getMemberVC().setVisible(false);
                 this.frame.getMemberVC().hide();
                 this.frame.getDesktopPane().remove(this.frame.getMemberVC());
                 this.frame.getDesktopPane().add(this.frame.getMainPage());
                 this.frame.getMainPage().setVisible(true);
                 this.frame.getMainPage().show();
+                Controller.Rent_Controller.bookList.clear();
             }
+
         }
         if(ae.getSource().equals(back)){
             this.frame.getMemberVC().setVisible(false);

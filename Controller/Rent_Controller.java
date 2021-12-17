@@ -104,6 +104,9 @@ public class Rent_Controller implements ActionListener {
                 }
             }
             book.rentBooks(bookList);
+            main.getRentView().getModel().setRowCount(0);
+            idcheck.clear();
+            daycheck.clear();
         }
 
         else if (ae.getSource().equals(button)) {
