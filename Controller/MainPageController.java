@@ -9,11 +9,13 @@ import java.awt.event.ActionListener;
 public class MainPageController implements ActionListener {
     private MainPage view;
     private MDI mdi;
+    private ManageBookController manageBookController;
 
 
-    public MainPageController(MainPage view, MDI mdi) {
+    public MainPageController(MainPage view, MDI mdi, ManageBookController manageBookController) {
         this.mdi = mdi;
         this.view = view;
+        this.manageBookController = manageBookController;
         this.view.getManage().addActionListener(this);
         this.view.getReg().addActionListener(this);
         this.view.getRent().addActionListener(this);
@@ -30,11 +32,11 @@ public class MainPageController implements ActionListener {
             this.mdi.getRegisterView().show();
 
         } else if (e.getSource().equals(view.getManage())) {
+            this.manageBookController.updateTable();
             this.mdi.getMainPage().setVisible(false);
             this.mdi.getMainPage().hide();
             this.mdi.getDesktopPane().remove(this.mdi.getMainPage());
             this.mdi.getDesktopPane().add(this.mdi.getManageBooks());
-            this.mdi.getManageBooks().setVisible(true);
             this.mdi.getManageBooks().show();
 
         } else if (e.getSource().equals(view.getRent())) {

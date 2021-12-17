@@ -191,7 +191,6 @@ public class ManageBookController implements ActionListener {
 
 
         } else if (ae.getSource().equals(main.getManageBooks().getBack())) {
-            this.main.getManageBooks().setVisible(false);
             this.main.getManageBooks().hide();
             this.main.getDesktopPane().remove(this.main.getManageBooks());
             this.main.getDesktopPane().add(this.main.getMainPage());

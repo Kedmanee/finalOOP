@@ -179,7 +179,7 @@ public class ManageBooks extends JInternalFrame implements InternalFrameListener
         this.pack();
 //        this.setVisible(true);
         this.addInternalFrameListener(this);
-        this.show();
+        this.hide();
 
     }
 

@@ -60,7 +60,7 @@ public class MDI extends JFrame {
         rentView = new RentView(false, false, false, false, this);
         registerView = new RegisterView(false, false, false, false, this);
         mainPage = new MainPage(false, false, false, false, this);
-        mainPageController = new MainPageController(mainPage, this);
+        mainPageController = new MainPageController(mainPage, this, manageBookController);
         registerController = new RegisterController(registerView, this);
         rent_controller = new Rent_Controller(rentView, this);
 

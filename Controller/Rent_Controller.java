@@ -44,6 +44,8 @@ public class Rent_Controller implements ActionListener {
         main.getRentView().getBtn_submit().addActionListener(this);
         main.getRentView().getBtn_delete().addActionListener(this);
         main.getRentView().getBack().addActionListener(this);
+        infoBook.getUpdate().addActionListener(this);
+        infoBook.getDetele().addActionListener(this);
     }
 
     @Override
@@ -77,11 +79,18 @@ public class Rent_Controller implements ActionListener {
                 idcheck.add(search); //เพิ่มไอดีในลิสต์
                 daycheck.add(days); //เพิ่มวันในลิสต์
             }
+            else {
+                main.getRentView().getBookCodeTF().setText("");
+                main.getRentView().getTextDayrentTF().setText("");
+            }
         }
 
         else if (ae.getSource().equals(main.getRentView().getBtn_submit())) {
             Book booklist = new Book();//รับลิสต์หนังสือมาจากdb
             Book book = new Book();//เอาไว้สำหรับรับหนังสือจะยืม
+            if(idcheck.size() == 0){
+                return;
+            }
             this.main.getRentView().setVisible(false);
             this.main.getRentView().hide();
             this.main.getDesktopPane().remove(this.main.getRentView());
@@ -110,22 +119,31 @@ public class Rent_Controller implements ActionListener {
         }
 
         else if (ae.getSource().equals(button)) {
-            int row;
-            if (main.getRentView().getTableOfRentals().getSelectedRow() == -1) {
+            int row = main.getRentView().getTableOfRentals().getSelectedRow();
+            if (row == -1) {
                 row = keepRow;
             } else {
                 row = main.getRentView().getTableOfRentals().getSelectedRow();
                 keepRow = row;
             }
-            System.out.println();
+
             for (Book checkBook : bookDB.getBookList()) {
-                System.out.println(main.getRentView().getTableOfRentals().getModel().getValueAt(row, 0));
-                if (Integer.parseInt((String) main.getRentView().getTableOfRentals().getModel().getValueAt(row, 0)) == (checkBook.getBookID())) {
+                System.out.println(checkBook.getBookID());
+                if (main.getRentView().getTableOfRentals().getValueAt(row, 0).equals(String.valueOf(checkBook.getBookID())))  {
+
+                    System.out.println(checkBook.getBookID());
+
                     infoBook.getBookId2().setText(String.valueOf(checkBook.getBookID()));
                     infoBook.getBookNameTF().setText(checkBook.getTitle());
+                    infoBook.getBookNameTF().setEditable(false);
                     infoBook.getCategoryCB().setSelectedItem(checkBook.getCategories());
+                    infoBook.getCategoryCB().setEnabled(false);
                     infoBook.getAuthorTF().setText(checkBook.getWriter());
+                    infoBook.getAuthorTF().setEditable(false);
                     infoBook.getPricePerDayTF().setText(String.valueOf(checkBook.getPrice()));
+                    infoBook.getPricePerDayTF().setEditable(false);
+                    infoBook.getUpdate().setEnabled(false);
+                    infoBook.getDetele().setEnabled(false);
                 }
             }
             infoBook.getFrame().setVisible(true);
@@ -135,17 +153,7 @@ public class Rent_Controller implements ActionListener {
             int index = (main.getRentView().getTableOfRentals().getSelectedRow());
             idcheck.remove(index);
             daycheck.remove(index);
-            main.getRentView().getModel().setRowCount(0);
-            for (int i = 0; i < idcheck.size(); i++) {
-                for (Book checkbook : bookDB.getBookList()) {
-                    if (idcheck.get(i) == checkbook.getBookID()) {
-                        Object[] row = {idcheck.get(i), checkbook.getTitle(), daycheck.get(i)}; //รับข้อมูลมาใส่ในobject
-                        main.getRentView().getModel().addRow(row); //นำrowที่รับข้อมูลต่างๆไปใส่ในตาราง
-                        main.getRentView().getTableOfRentals().getColumn("").setCellRenderer(btn);
-                        main.getRentView().getTableOfRentals().getColumn("").setCellEditor(new ButtonEditor(new JCheckBox()));
-                    }
-                }
-            }
+            checkBooksIdForRent();
         }
 
 
@@ -156,6 +164,20 @@ public class Rent_Controller implements ActionListener {
             this.main.getDesktopPane().add(this.main.getMainPage());
             this.main.getMainPage().setVisible(true);
             this.main.getMainPage().show();
+
+        }
+        else if (ae.getSource().equals(infoBook.getUpdate())) {
+            Book dummy = new Book(Integer.parseInt(infoBook.getBookId2().getText()), infoBook.getBookNameTF().getText(), (String) infoBook.getCategoryCB().getSelectedItem(), true, infoBook.getAuthorTF().getText(), Double.parseDouble(infoBook.getPricePerDayTF().getText()), 0);
+            dummy.editBookDetail();
+            checkBooksIdForRent();
+            infoBook.getFrame().dispose();
+
+        } else if (ae.getSource().equals(infoBook.getDetele())) {
+            bookDB.deleteBook(Integer.parseInt(infoBook.getBookId2().getText()));
+            infoBook.getFrame().dispose();
+            main.getManageBooks().getModel().setRowCount(0);
+            checkBooksIdForRent();
+
 
         }
 
@@ -190,6 +212,19 @@ public class Rent_Controller implements ActionListener {
         }
         public Object getCellEditorValue() {
             return new String(label);
+        }
+    }
+    public void checkBooksIdForRent(){
+        main.getRentView().getModel().setRowCount(0);
+        for (int i = 0; i < idcheck.size(); i++) {
+            for (Book checkbook : bookDB.getBookList()) {
+                if (idcheck.get(i) == checkbook.getBookID()) {
+                    Object[] row = {idcheck.get(i), checkbook.getTitle(), daycheck.get(i)}; //รับข้อมูลมาใส่ในobject
+                    main.getRentView().getModel().addRow(row); //นำrowที่รับข้อมูลต่างๆไปใส่ในตาราง
+                    main.getRentView().getTableOfRentals().getColumn("").setCellRenderer(btn);
+                    main.getRentView().getTableOfRentals().getColumn("").setCellEditor(new ButtonEditor(new JCheckBox()));
+                }
+            }
         }
     }
 }
